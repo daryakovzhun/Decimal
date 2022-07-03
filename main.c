@@ -80,7 +80,8 @@ void set_bit(s21_decimal* number, int bit, int sign) {
     }
 }
 
-void shift_left(s21_decimal* number) {
+int shift_left(s21_decimal* number) {
+    int is_overflow = get_bit(*number, 95);
     for (int i = 95; i >= 0; i--) {
         if (i != 0) {
             set_bit(number, i, get_bit(*number, i - 1));
@@ -88,6 +89,7 @@ void shift_left(s21_decimal* number) {
             set_bit(number, i, 0);
         }
     }
+    return is_overflow;
 }
 
 void initial_num(s21_decimal* number) {
@@ -115,7 +117,7 @@ void s21_sub_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *resul
         int bit_val1 = get_bit(value_1, i);
         int bit_val2 = get_bit(value_2, i);
 
-        set_bit(result, i, ((bit_val1 && !bit_val2) || (!bit_val1 && bit_val2)));
+        set_bit(result, i, bit_val1 ^ bit_val2);  // ((bit_val1 && !bit_val2) || (!bit_val1 && bit_val2))
 
         if (!bit_val1 && bit_val2) {
             int k = i + 1;
@@ -135,11 +137,22 @@ void s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *resul
             s21_decimal temp = value_1;
             int k = 0;
             while (k < i) {
-                shift_left(&temp);
+                if (shift_left(&temp)) {
+                    i = 96;
+                    break;
+                }
                 k++;
             }
             s21_add_simple(temp, *result, result);
         }
+    }
+}
+
+void s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+    initial_num(result);
+    s21_decimal copy_val_2 = value_2;
+    while (s21_is) {
+
     }
 }
 
@@ -148,7 +161,7 @@ int main() {
     num.bits[0] = 465;
     num.bits[1] = 0;
     num.bits[2] = 0;
-    num.bits[3] = 0;
+    num.bits[3] = 1946531;
 
     num2.bits[0] = 2;
     num2.bits[1] = 0;

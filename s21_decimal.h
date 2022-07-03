@@ -42,4 +42,26 @@ int s21_round(s21_decimal value, s21_decimal *result);
 int s21_truncate(s21_decimal value, s21_decimal *result);
 int s21_negate(s21_decimal value, s21_decimal *result);
 
+
+int get_sign(s21_decimal number);
+void set_sign(s21_decimal* number, int sign);
+int get_degree(s21_decimal number);
+void set_degree(s21_decimal* number, int degree);
+void print_decimal_binary(s21_decimal number);
+int get_bit(s21_decimal number, int bit);
+void set_bit(s21_decimal* number, int bit, int sign);
+int shift_left(s21_decimal* number);
+void initial_num(s21_decimal* number);
+void s21_add_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+void s21_sub_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+void s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+void s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+int s21_is_less_simple(s21_decimal value_1, s21_decimal value_2);
+int s21_is_equal_simple(s21_decimal value_1, s21_decimal value_2);
+int s21_is_less_or_equal_simple(s21_decimal value_1, s21_decimal value_2);
+int s21_is_greater_simple(s21_decimal value_1, s21_decimal value_2);
+int s21_is_greater_or_equal(s21_decimal value_1, s21_decimal value_2);
+int s21_is_not_equal_simple(s21_decimal value_1, s21_decimal value_2);
+
+
 #endif  //  SRC_S21_DECIMAL_H
