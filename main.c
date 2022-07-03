@@ -92,6 +92,18 @@ int shift_left(s21_decimal* number) {
     return is_overflow;
 }
 
+int shift_right(s21_decimal* number) {
+    int is_overflow = get_bit(*number, 1);
+    for (int i = 0; i < 96; i++) {
+        if (i != 95) {
+            set_bit(number, i, get_bit(*number, i + 1));
+        } else {
+            set_bit(number, i, 0);
+        }
+    }
+    return is_overflow;
+}
+
 void initial_num(s21_decimal* number) {
     for (int i = 0; i < 96; i++) {
         set_bit(number, i, 0);
@@ -148,25 +160,27 @@ void s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *resul
     }
 }
 
-void s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-    initial_num(result);
-    s21_decimal copy_val_2 = value_2;
-    while (s21_is) {
+// void s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+//     initial_num(result);
+//     s21_decimal copy_val_2 = value_2;
+//     while (s21_is_greater_or_equal_simple(value_1, copy_val_2) == FALSE) {
+//         shift_left(&copy_val_2);
+//     }
+//     shift_right(&copy_val_2);
 
-    }
-}
+// }
 
 int main() {
-    s21_decimal num = {0}, num2 = {0}, res; 
+    s21_decimal num = {0}; //, num2 = {0}, res; 
     num.bits[0] = 465;
     num.bits[1] = 0;
     num.bits[2] = 0;
     num.bits[3] = 1946531;
 
-    num2.bits[0] = 2;
-    num2.bits[1] = 0;
-    num2.bits[2] = 0;
-    num2.bits[3] = 0;
+    // num2.bits[0] = 2;
+    // num2.bits[1] = 0;
+    // num2.bits[2] = 0;
+    // num2.bits[3] = 0;
 
     // set_degree(&num, 28);
     // printf("degree = %d\n", get_degree(num));
@@ -176,9 +190,11 @@ int main() {
 
 
     print_decimal_binary(num);
-    print_decimal_binary(num2);
-    s21_mul_simple(num, num2, &res);
-    print_decimal_binary(res);
+    // print_decimal_binary(num2);
+    // s21_mul_simple(num, num2, &res);
+    shift_right(&num);
+    print_decimal_binary(num);
+    // print_decimal_binary(res);
 
 
     // printf("\n%d", get_bit(num, 33));

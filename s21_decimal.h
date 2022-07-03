@@ -60,7 +60,7 @@ int s21_is_less_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_equal_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_less_or_equal_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_greater_simple(s21_decimal value_1, s21_decimal value_2);
-int s21_is_greater_or_equal(s21_decimal value_1, s21_decimal value_2);
+int s21_is_greater_or_equal_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_not_equal_simple(s21_decimal value_1, s21_decimal value_2);
 
 
