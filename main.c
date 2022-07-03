@@ -80,9 +80,26 @@ void set_bit(s21_decimal* number, int bit, int sign) {
     }
 }
 
+void shift_left(s21_decimal* number) {
+    for (int i = 95; i >= 0; i--) {
+        if (i != 0) {
+            set_bit(number, i, get_bit(*number, i - 1));
+        } else {
+            set_bit(number, i, 0);
+        }
+    }
+}
+
+void initial_num(s21_decimal* number) {
+    for (int i = 0; i < 96; i++) {
+        set_bit(number, i, 0);
+    }
+}
+
 void s21_add_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+    initial_num(result);
     int rank = 0;
-    for (int i = 0; i < 95; i++) {
+    for (int i = 0; i < 96; i++) {
         int bit_val1 = get_bit(value_1, i);
         int bit_val2 = get_bit(value_2, i);
 
@@ -93,7 +110,8 @@ void s21_add_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *resul
 }
 
 void s21_sub_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-    for (int i = 0; i < 95; i++) {
+    initial_num(result);
+    for (int i = 0; i < 96; i++) {
         int bit_val1 = get_bit(value_1, i);
         int bit_val2 = get_bit(value_2, i);
 
@@ -111,26 +129,32 @@ void s21_sub_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *resul
 }
 
 void s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-    for (int i = 0; i < 95; i++) {
-        int bit_val1 = get_bit(value_2, i);
-        int bit_val2 = get_bit(value_2, i);
-
-        s21_decimal temp;
-
+    initial_num(result);
+    for (int i = 0; i < 96; i++) {
+        if (get_bit(value_2, i) == 1) {
+            s21_decimal temp = value_1;
+            int k = 0;
+            while (k < i) {
+                shift_left(&temp);
+                k++;
+            }
+            s21_add_simple(temp, *result, result);
+        }
     }
 }
 
 int main() {
-    s21_decimal num = {0}, num2 = {0}, res = {0}; 
-    num.bits[0] = 0;
+    s21_decimal num = {0}, num2 = {0}, res; 
+    num.bits[0] = 465;
     num.bits[1] = 0;
-    num.bits[2] = 1;
+    num.bits[2] = 0;
     num.bits[3] = 0;
 
     num2.bits[0] = 2;
     num2.bits[1] = 0;
     num2.bits[2] = 0;
     num2.bits[3] = 0;
+
     // set_degree(&num, 28);
     // printf("degree = %d\n", get_degree(num));
 
@@ -140,8 +164,9 @@ int main() {
 
     print_decimal_binary(num);
     print_decimal_binary(num2);
-    s21_sub_simple(num, num2, &res);
+    s21_mul_simple(num, num2, &res);
     print_decimal_binary(res);
+
 
     // printf("\n%d", get_bit(num, 33));
 
