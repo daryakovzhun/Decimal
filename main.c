@@ -160,27 +160,43 @@ void s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *resul
     }
 }
 
-// void s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-//     initial_num(result);
-//     s21_decimal copy_val_2 = value_2;
-//     while (s21_is_greater_or_equal_simple(value_1, copy_val_2) == FALSE) {
-//         shift_left(&copy_val_2);
-//     }
-//     shift_right(&copy_val_2);
+void s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+    initial_num(result);
+    s21_decimal temp = {0};
+    if (s21_is_greater_or_equal_simple(value_1, value_2))
+        set_bit(&temp, 0, 1);
 
-// }
+    while(1) {
+        s21_decimal copy_val_2 = value_2;
+        while (s21_is_greater_simple(value_1, copy_val_2)) {
+            shift_left(&copy_val_2);
+            shift_left(&temp);
+        }
+
+        // TODO Добавить условие если значение сразу равно 0
+        shift_right(&copy_val_2);
+        shift_right(&temp);
+
+        s21_sub_simple(value_1, copy_val_2, &value_1);
+        s21_add_simple(*result, temp, result);
+        initial_num(&temp);
+        set_bit(&temp, 0, 1);
+        if (s21_is_less_simple(value_1, value_2))
+            break;
+    }
+}
 
 int main() {
-    s21_decimal num = {0}; //, num2 = {0}, res; 
-    num.bits[0] = 465;
+    s21_decimal num = {0}, num2 = {0}, res; 
+    num.bits[0] = 87;
     num.bits[1] = 0;
     num.bits[2] = 0;
-    num.bits[3] = 1946531;
+    num.bits[3] = 0;
 
-    // num2.bits[0] = 2;
-    // num2.bits[1] = 0;
-    // num2.bits[2] = 0;
-    // num2.bits[3] = 0;
+    num2.bits[0] = 13;
+    num2.bits[1] = 0;
+    num2.bits[2] = 0;
+    num2.bits[3] = 0;
 
     // set_degree(&num, 28);
     // printf("degree = %d\n", get_degree(num));
@@ -190,11 +206,14 @@ int main() {
 
 
     print_decimal_binary(num);
-    // print_decimal_binary(num2);
+    print_decimal_binary(num2);
+     printf("\n");
+     s21_div_simple(num, num2, &res);
     // s21_mul_simple(num, num2, &res);
-    shift_right(&num);
-    print_decimal_binary(num);
-    // print_decimal_binary(res);
+    // shift_right(&num);
+ 
+   
+    print_decimal_binary(res);
 
 
     // printf("\n%d", get_bit(num, 33));
