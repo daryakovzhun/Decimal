@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <math.h>
 
+#include <string.h>
+#include <stdlib.h>
+
 enum enum_error {
     OK = 0,
     FALSE = 0,
@@ -51,6 +54,7 @@ void print_decimal_binary(s21_decimal number);
 int get_bit(s21_decimal number, int bit);
 void set_bit(s21_decimal* number, int bit, int sign);
 int shift_left(s21_decimal* number);
+int shift_right(s21_decimal* number);
 void initial_num(s21_decimal* number);
 void s21_add_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 void s21_sub_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
@@ -63,5 +67,6 @@ int s21_is_greater_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_greater_or_equal_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_not_equal_simple(s21_decimal value_1, s21_decimal value_2);
 
+void print_decimal_binary_top(s21_decimal number);
 
 #endif  //  SRC_S21_DECIMAL_H
