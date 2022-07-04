@@ -51,7 +51,7 @@ void set_degree(s21_decimal* number, int degree) {
 }
 
 void print_decimal_binary_top(s21_decimal number) {
-  char line[128];
+  char line[256];
   int in = 0;
   for (int i = 3; i >= 0; i--) {
     int k = 31;
@@ -63,7 +63,7 @@ void print_decimal_binary_top(s21_decimal number) {
   }
   char command[512] = "echo \"";
   strcat(command, line);
-  strcat(command, "\" | python a.py\n");
+  strcat(command, "\" | python3 a.py\n");
   printf(command);
   system(command);
 }
@@ -165,24 +165,23 @@ void s21_sub_simple(s21_decimal value_1, s21_decimal value_2,
   }
 }
 
-void s21_mul_simple(s21_decimal value_1, s21_decimal value_2,
-                    s21_decimal* result) {
-  initial_num(result);
-  for (int i = 0; i < 96; i++) {
-    if (get_bit(value_2, i) == 1) {
-      s21_decimal temp = value_1;
-      int k = 0;
-      while (k < i) {
-        if (shift_left(&temp)) {
-          i = 96;
-          break;
-        }
-        k++;
-      }
-      s21_add_simple(temp, *result, result);
-    }
-  }
-}
+// void s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+//   initial_num(result);
+//   for (int i = 0; i < 96; i++) {
+//     if (get_bit(value_2, i) == 1) {
+//       s21_decimal temp = value_1;
+//       int k = 0;
+//       while (k < i) {
+//         if (shift_left(&temp)) {
+//           i = 96;
+//           break;
+//         }
+//         k++;
+//       }
+//       s21_add_simple(temp, *result, result);
+//     }
+//   }
+// }
 
 void s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     initial_num(result);
@@ -205,7 +204,7 @@ void s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *resul
 s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     // if (value_2.bits[0] + value_2.bits[1] + value_2.bits[2])
     //     return DEV_BY_ZERO;
-    if(!result) 
+    if(result) 
         initial_num(result);
     s21_decimal fmod = {0};
     s21_decimal temp = {0};
@@ -221,7 +220,7 @@ s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal
             shift_right(&copy_val_2);
             shift_right(&temp);
             s21_sub_simple(value_1, copy_val_2, &value_1);
-            if (!result) 
+            if (result) 
                 s21_add_simple(*result, temp, result);
             initial_num(&temp);
             set_bit(&temp, 0, 1);
@@ -235,22 +234,35 @@ s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal
 }
 
 void s21_bank_rounding(s21_decimal *value, int count) {
+    print_decimal_binary_top(*value);
     s21_decimal base = {0};
     s21_decimal res = {0};
     s21_decimal one = {0};
+    s21_decimal two = {0};
     s21_from_int_to_decimal(10, &base);
     s21_from_int_to_decimal(1, &one);
-    s21_decimal dec_mod = s21_div_simple(*value, base, &res);
+    s21_from_int_to_decimal(2, &two);   
+    s21_decimal two_res = {0};
+    s21_decimal dec_mod = s21_div_simple(*value, base, NULL);
     if (dec_mod.bits[0] > 5) {
-        s21_div_simple(*value, base, &value);
-        s21_add_simple(*value, one, &value);
+        s21_div_simple(*value, base, value);
+        // print_decimal_binary_top(*value);
+        s21_add_simple(*value, one, value);
+    } else if (dec_mod.bits[0] == 5) {
+        s21_div_simple(*value, base, value);
+        two_res = s21_div_simple(*value, two, NULL);
+
+        print_decimal_binary_top(two_res);
+        if (s21_is_equal_simple(one, two_res))
+            s21_add_simple(*value, one, value);         
+        initial_num(&two_res);        
     }
-    print_decimal_binary(*value);
+    print_decimal_binary_top(*value);
 }
 
 int main() {
     s21_decimal num = {0}, num2 = {0}, res; 
-    num.bits[0] = 109;
+    num.bits[0] = 115;
     num.bits[1] = 0;
     num.bits[2] = 0;
     num.bits[3] = 0;
