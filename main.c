@@ -168,21 +168,13 @@ s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal
     s21_decimal temp = {0};
     if (s21_is_greater_or_equal_simple(value_1, value_2))
         set_bit(&temp, 0, 1);
-    // print_decimal_binary(temp);
-    // && value_2.bits[0] != 0 && value_2.bits[1] != 0 && value_2.bits[2] != 0
     if (!s21_is_greater_simple(value_2, value_1)) {
         while(1) {
             s21_decimal copy_val_2 = value_2;
-
             while (s21_is_greater_or_equal_simple(value_1, copy_val_2)) {
                 shift_left(&copy_val_2);
                 shift_left(&temp);
             }
-            // TODO Добавить условие если значение сразу равно 0
-            // if (s21_is_greater_simple(value_2, value_1)) {
-            //     fmod = value_1;
-            //     break;
-            // }
             shift_right(&copy_val_2);
             shift_right(&temp);
             s21_sub_simple(value_1, copy_val_2, &value_1);
@@ -198,14 +190,21 @@ s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal
     return fmod;
 }
 
+// void s21_bank_rounding(s21_decimal *value) {
+
+
+// }
+
+
+
 int main() {
     s21_decimal num = {0}, num2 = {0}, res; 
-    num.bits[0] = 1;
+    num.bits[0] = 9;
     num.bits[1] = 0;
     num.bits[2] = 0;
     num.bits[3] = 0;
 
-    num2.bits[0] = 1;
+    num2.bits[0] = 15;
     num2.bits[1] = 0;
     num2.bits[2] = 0;
     num2.bits[3] = 0;
