@@ -18,24 +18,24 @@ void set_sign(s21_decimal* number, int sign) {
     }
 }
 
-int get_degree(s21_decimal number) {
-    int degree_bin = 0, shift = 16, k = 1;
-    while (shift <= 23) {
-        int bit = ((number.bits[3] & (1 << shift)) == 0) ? 0 : 1;
-        degree_bin += bit * k;
-        k *= 10;
-        shift++;
-    }
+// int get_degree(s21_decimal number) {
+//     int degree_bin = 0, shift = 16, k = 1;
+//     while (shift <= 23) {
+//         int bit = ((number.bits[3] & (1 << shift)) == 0) ? 0 : 1;
+//         degree_bin += bit * k;
+//         k *= 10;
+//         shift++;
+//     }
 
-    int degree = 0, i = 0;
-    while (degree_bin > 0) {
-        degree += degree_bin % 10 * pow(2, i);
-        i++;
-        degree_bin /= 10;
-    }
+//     int degree = 0, i = 0;
+//     while (degree_bin > 0) {
+//         degree += degree_bin % 10 * pow(2, i);
+//         i++;
+//         degree_bin /= 10;
+//     }
 
-    return degree;
-}
+//     return degree;
+// }
 
 void set_degree(s21_decimal* number, int degree) {
     int shift = 16;
@@ -160,23 +160,30 @@ void s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *resul
     }
 }
 
-void s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+    // if (value_2.bits[0] + value_2.bits[1] + value_2.bits[2])
+    //     return DEV_BY_ZERO;
     initial_num(result);
+    s21_decimal fmod = {0};
     s21_decimal temp = {0};
     if (s21_is_greater_or_equal_simple(value_1, value_2))
         set_bit(&temp, 0, 1);
-
+    // print_decimal_binary(temp);
+    // && value_2.bits[0] != 0 && value_2.bits[1] != 0 && value_2.bits[2] != 0
     while(1) {
         s21_decimal copy_val_2 = value_2;
-        while (s21_is_greater_simple(value_1, copy_val_2)) {
+
+        while (s21_is_greater_or_equal_simple(value_1, copy_val_2)) {
             shift_left(&copy_val_2);
             shift_left(&temp);
         }
-
         // TODO Добавить условие если значение сразу равно 0
+        if (s21_is_greater_simple(value_2, value_1)) {
+            fmod = value_1;
+            break;
+        }
         shift_right(&copy_val_2);
         shift_right(&temp);
-
         s21_sub_simple(value_1, copy_val_2, &value_1);
         s21_add_simple(*result, temp, result);
         initial_num(&temp);
@@ -184,16 +191,18 @@ void s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *resul
         if (s21_is_less_simple(value_1, value_2))
             break;
     }
+    fmod = value_1;
+    return fmod;
 }
 
 int main() {
     s21_decimal num = {0}, num2 = {0}, res; 
-    num.bits[0] = 87;
+    num.bits[0] = 4;
     num.bits[1] = 0;
     num.bits[2] = 0;
     num.bits[3] = 0;
 
-    num2.bits[0] = 13;
+    num2.bits[0] = 4;
     num2.bits[1] = 0;
     num2.bits[2] = 0;
     num2.bits[3] = 0;
@@ -205,16 +214,17 @@ int main() {
     // set_bit(&num, 2, 0);
 
 
-    print_decimal_binary(num);
-    print_decimal_binary(num2);
-     printf("\n");
-     s21_div_simple(num, num2, &res);
+    // print_decimal_binary(num);
+    // print_decimal_binary(num2);
+    printf("\n");
+    s21_div_simple(num, num2, &res);
     // s21_mul_simple(num, num2, &res);
     // shift_right(&num);
  
-   
+    printf("div\n");
     print_decimal_binary(res);
-
+    printf("fmod\n");
+    print_decimal_binary(s21_div_simple(num, num2, &res));
 
     // printf("\n%d", get_bit(num, 33));
 
