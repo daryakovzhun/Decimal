@@ -8,19 +8,13 @@ int s21_from_int_to_decimal(int src, s21_decimal *dst) {
 }
 
 int get_exp(int number) {
-    int degree_bin = 0, shift = 23, k = 1;
-    while (shift <= 30) {
-        int bit = ((number & (1 << shift)) == 0) ? 0 : 1;
-        degree_bin += bit * k;
-        k *= 10;
-        shift++;
-    }
-
+    int shift = 23;
     int degree = 0, i = 0;
-    while (degree_bin > 0) {
-        degree += degree_bin % 10 * pow(2, i);
+    while (shift <= 30) {
+        int bit = ((number & (1 << shift)) != 0);
+        degree += bit * pow(2, i);
+        shift++;
         i++;
-        degree_bin /= 10;
     }
 
     return degree;

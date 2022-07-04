@@ -19,19 +19,17 @@ void set_sign(s21_decimal* number, int sign) {
 }
 
 int get_degree(s21_decimal number) {
-  int degree_bin = 0, shift = 16, k = 1;
+  int shift = 16;
+  int degree = 0, i = 0;
   while (shift <= 23) {
-    int bit = ((number.bits[3] & (1 << shift)) == 0) ? 0 : 1;
-    degree_bin += bit * k;
-    k *= 10;
+    int bit = ((number.bits[3] & (1 << shift)) != 0);
+    degree += bit * pow(2, i);
     shift++;
+    i++;
   }
 
-  int degree = 0, i = 0;
-  while (degree_bin > 0) {
-    degree += degree_bin % 10 * pow(2, i);
-    i++;
-    degree_bin /= 10;
+  if (degree > 28) {
+    degree = 28;
   }
 
   return degree;
@@ -165,9 +163,9 @@ void s21_sub_simple(s21_decimal value_1, s21_decimal value_2,
   }
 }
 
-void s21_mul_simple(s21_decimal value_1, s21_decimal value_2,
-                    s21_decimal* result) {
+void s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal* result) {
   initial_num(result);
+  int is_owerfull = 0;
   for (int i = 0; i < 96; i++) {
     if (get_bit(value_2, i) == 1) {
       s21_decimal temp = value_1;
@@ -175,6 +173,7 @@ void s21_mul_simple(s21_decimal value_1, s21_decimal value_2,
       while (k < i) {
         if (shift_left(&temp)) {
           i = 96;
+          is_owerfull = 1;
           break;
         }
         k++;
@@ -182,6 +181,7 @@ void s21_mul_simple(s21_decimal value_1, s21_decimal value_2,
       s21_add_simple(temp, *result, result);
     }
   }
+  return is_owerfull;
 }
 
 // void s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal
@@ -197,25 +197,26 @@ void s21_mul_simple(s21_decimal value_1, s21_decimal value_2,
 
 int main() {
   s21_decimal num;  //, num2 = {0}, res;
-  float a = 9876876087608709543543.0;
+  float a = 5;
   printf("float = %f\n", a);
   s21_from_float_to_decimal(a, &num);
-  // num.bits[0] = 465;
-  // num.bits[1] = 0;
-  // num.bits[2] = 0;
-  // num.bits[3] = 1946531;
+  //   num.bits[0] = 465;
+  //   num.bits[1] = 0;
+  //   num.bits[2] = 0;
+  //   num.bits[3] = 1946531;
 
   // // num2.bits[0] = 2;
   // // num2.bits[1] = 0;
   // // num2.bits[2] = 0;
   // // num2.bits[3] = 0;
 
-  // print_decimal_binary(num);
-  // // print_decimal_binary(num2);
-  // // s21_mul_simple(num, num2, &res);
-  // shift_right(&num);
-  // print_decimal_binary(num);
-  // // print_decimal_binary(res);
+  print_decimal_binary(num);
+  printf("exp = %d\n", get_degree(num));
+  // print_decimal_binary(num2);
+  // s21_mul_simple(num, num2, &res);
+  //   shift_right(&num);
+  //   print_decimal_binary(num);
+  // print_decimal_binary(res);
 
   // // printf("\n%d", get_bit(num, 33));
 

@@ -58,7 +58,7 @@ int shift_right(s21_decimal* number);
 void initial_num(s21_decimal* number);
 void s21_add_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 void s21_sub_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
-void s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+int s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 void s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int s21_is_less_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_equal_simple(s21_decimal value_1, s21_decimal value_2);
