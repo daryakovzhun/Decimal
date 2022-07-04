@@ -2,8 +2,8 @@
 
 int s21_is_less_simple(s21_decimal value_1, s21_decimal value_2) {
     int is_less = FALSE;
-    print_decimal_binary(value_1);
-    print_decimal_binary(value_2);
+    // print_decimal_binary(value_1);
+    // print_decimal_binary(value_2);
     for (int i = 95; i >= 0; i--) {
         if (get_bit(value_1, i) ^ get_bit(value_2, i)) {
             is_less = get_bit(value_2, i);

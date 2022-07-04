@@ -55,13 +55,13 @@ void initial_num(s21_decimal* number);
 void s21_add_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 void s21_sub_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 void s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
-void s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int s21_is_less_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_equal_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_less_or_equal_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_greater_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_greater_or_equal_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_not_equal_simple(s21_decimal value_1, s21_decimal value_2);
-
+void s21_bank_rounding(s21_decimal *value, int count);
 
 #endif  //  SRC_S21_DECIMAL_H

@@ -163,7 +163,8 @@ void s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *resul
 s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     // if (value_2.bits[0] + value_2.bits[1] + value_2.bits[2])
     //     return DEV_BY_ZERO;
-    initial_num(result);
+    if(!result) 
+        initial_num(result);
     s21_decimal fmod = {0};
     s21_decimal temp = {0};
     if (s21_is_greater_or_equal_simple(value_1, value_2))
@@ -178,7 +179,8 @@ s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal
             shift_right(&copy_val_2);
             shift_right(&temp);
             s21_sub_simple(value_1, copy_val_2, &value_1);
-            s21_add_simple(*result, temp, result);
+            if (!result) 
+                s21_add_simple(*result, temp, result);
             initial_num(&temp);
             set_bit(&temp, 0, 1);
             if (s21_is_less_simple(value_1, value_2)) {
@@ -190,16 +192,23 @@ s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal
     return fmod;
 }
 
-// void s21_bank_rounding(s21_decimal *value) {
-
-
-// }
-
-
+void s21_bank_rounding(s21_decimal *value, int count) {
+    s21_decimal base = {0};
+    s21_decimal res = {0};
+    s21_decimal one = {0};
+    s21_from_int_to_decimal(10, &base);
+    s21_from_int_to_decimal(1, &one);
+    s21_decimal dec_mod = s21_div_simple(*value, base, &res);
+    if (dec_mod.bits[0] > 5) {
+        s21_div_simple(*value, base, &value);
+        s21_add_simple(*value, one, &value);
+    }
+    print_decimal_binary(*value);
+}
 
 int main() {
     s21_decimal num = {0}, num2 = {0}, res; 
-    num.bits[0] = 9;
+    num.bits[0] = 109;
     num.bits[1] = 0;
     num.bits[2] = 0;
     num.bits[3] = 0;
@@ -211,23 +220,21 @@ int main() {
 
     // set_degree(&num, 28);
     // printf("degree = %d\n", get_degree(num));
-
     // printf("num = %d", num.bits[3]);
     // set_bit(&num, 2, 0);
-
-
     // print_decimal_binary(num);
     // print_decimal_binary(num2);
-    printf("\n");
-    s21_div_simple(num, num2, &res);
-    // s21_mul_simple(num, num2, &res);
-    // shift_right(&num);
- 
-    printf("div\n");
-    print_decimal_binary(res);
-    printf("fmod\n");
-    print_decimal_binary(s21_div_simple(num, num2, &res));
 
+    // printf("\n");
+    // s21_div_simple(num, num2, &res);
+    // // s21_mul_simple(num, num2, &res);
+    // // shift_right(&num);
+ 
+    // printf("div\n");
+    // print_decimal_binary(res);
+    // printf("fmod\n");
+    // print_decimal_binary(s21_div_simple(num, num2, &res));
+    s21_bank_rounding(&num, 1);
     // printf("\n%d", get_bit(num, 33));
 
     return 0;
