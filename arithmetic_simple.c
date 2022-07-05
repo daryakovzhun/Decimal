@@ -84,3 +84,17 @@ s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal
     fmod = value_1;
     return fmod;
 }
+
+void ostatok(s21_decimal value1, s21_decimal value2, s21_decimal *res) {
+  s21_decimal zero = {0};
+  s21_decimal base = {0};
+  int  i = 0;
+  s21_from_int_to_decimal(10, &base);
+  while(!s21_is_equal_simple(s21_div_simple(value1, value2, NULL), zero)) {
+    s21_mul_simple(value1, base, &value1);
+    s21_div_simple(value1, value2, res);
+    i++;
+    if (i == 28)
+      break;
+  }
+}

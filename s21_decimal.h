@@ -66,8 +66,10 @@ int s21_is_less_or_equal_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_greater_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_greater_or_equal_simple(s21_decimal value_1, s21_decimal value_2);
 int s21_is_not_equal_simple(s21_decimal value_1, s21_decimal value_2);
+void ostatok(s21_decimal value1, s21_decimal value2, s21_decimal *res);
 
 void print_decimal_binary_top(s21_decimal number);
 void s21_bank_rounding(s21_decimal *value, int count);
+void balance(s21_decimal* value_1, s21_decimal* value_2);
 
 #endif  //  SRC_S21_DECIMAL_H
