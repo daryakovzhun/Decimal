@@ -1,7 +1,10 @@
 #include "s21_decimal.h"
 
 void print_decimal_binary_top(s21_decimal number) {
-  char line[128];
+  d_print_decimal(number);
+  return;
+
+  char line[256];
   int in = 0;
   for (int i = 3; i >= 0; i--) {
     int k = 31;
@@ -9,11 +12,11 @@ void print_decimal_binary_top(s21_decimal number) {
       sprintf(line + in++, "%c", '0' + ((number.bits[i] & (1 << k)) != 0));
       k--;
     }
-    sprintf(line + in++, "%c", '.');
+    sprintf(line + in++, "%c", '-');
   }
   char command[512] = "echo \"";
   strcat(command, line);
-  strcat(command, "\" | python a.py\n");
+  strcat(command, "\" | python3 conv.py\n");
   printf(command);
   system(command);
 }

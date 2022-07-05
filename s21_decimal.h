@@ -71,5 +71,6 @@ void ostatok(s21_decimal value1, s21_decimal value2, s21_decimal *res);
 void print_decimal_binary_top(s21_decimal number);
 void s21_bank_rounding(s21_decimal *value, int count);
 void balance(s21_decimal* value_1, s21_decimal* value_2);
+void d_print_decimal(s21_decimal a);
 
 #endif  //  SRC_S21_DECIMAL_H

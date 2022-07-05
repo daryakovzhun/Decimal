@@ -41,7 +41,7 @@
 #define LESS_PATH " py_test/print_less_testcase.py"
 
 #define REDIRECT " >> "
-#define REDIRECT_FILE "input"
+#define REDIRECT_FILE "input.txt"
 
 #include <stdio.h>
 #include <stdlib.h>
