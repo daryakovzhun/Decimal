@@ -1,4 +1,4 @@
-#include "s21_decimal.h"
+#include "../s21_decimal.h"
 
 void print_decimal_binary_top(s21_decimal number) {
   d_print_decimal(number);

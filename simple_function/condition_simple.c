@@ -1,4 +1,4 @@
-#include "s21_decimal.h"
+#include "../s21_decimal.h"
 
 int s21_is_less_simple(s21_decimal value_1, s21_decimal value_2) {
     int is_less = FALSE;
@@ -13,7 +13,6 @@ int s21_is_less_simple(s21_decimal value_1, s21_decimal value_2) {
 }
 
 int s21_is_equal_simple(s21_decimal value_1, s21_decimal value_2) {
-  // todo -0 and +0
     int is_equal = TRUE;
     for (int i = 95; i >= 0; i--) {
         if (get_bit(value_1, i) != get_bit(value_2, i)) {

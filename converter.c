@@ -30,16 +30,6 @@ int get_bit_int(int number, int bit) {
   return sign;
 }
 
-int free_space(s21_decimal number) {
-  int i;
-  for (i = 95; i >= 0; i--) {
-    if (get_bit(number, i)) {
-      break;
-    }
-  }
-  return i + 1;
-}
-
 int s21_from_float_to_decimal(float src, s21_decimal *dst) {
   initial_num(dst);
   s21_from_int_to_decimal(1, dst);

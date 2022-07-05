@@ -1,4 +1,4 @@
-#include "s21_decimal.h"
+#include "../s21_decimal.h"
 
 void s21_add_simple(s21_decimal value_1, s21_decimal value_2,
                     s21_decimal* result) {
@@ -68,29 +68,23 @@ s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2,
                            s21_decimal* result) {
   // if (value_2.bits[0] + value_2.bits[1] + value_2.bits[2])
   //     return DEV_BY_ZERO;
-  // print_decimal_binary_top(value_1);
-  // print_decimal_binary_top(value_2);
+
   if (result) initial_num(result);
   s21_decimal fmod = {0};
   s21_decimal temp = {0};
   if (s21_is_greater_or_equal_simple(value_1, value_2)) set_bit(&temp, 0, 1);
   if (!s21_is_greater_simple(value_2, value_1)) {
     while (1) {
-      int count = 0;
       s21_decimal copy_val_2 = value_2;
       while (s21_is_greater_or_equal_simple(value_1, copy_val_2) && !(get_bit(value_1, 95) && get_bit(copy_val_2, 95))) {
-        // if (count++ > 100) {
-            // print_decimal_binary_top(value_1);
-            // print_decimal_binary_top(copy_val_2);
-            // printf("\n");
-        // }
         shift_left(&copy_val_2);
         shift_left(&temp);
       }
-         if (!(get_bit(value_1, 95) && get_bit(copy_val_2, 95))) {
-            shift_right(&copy_val_2);
-            shift_right(&temp);
-         }
+      
+      if (!(get_bit(value_1, 95) && get_bit(copy_val_2, 95))) {
+        shift_right(&copy_val_2);
+        shift_right(&temp);
+      }
       
       s21_sub_simple(value_1, copy_val_2, &value_1);
       if (result) s21_add_simple(*result, temp, result);

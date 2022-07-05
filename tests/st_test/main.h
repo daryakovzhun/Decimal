@@ -48,7 +48,7 @@
 #include <string.h>
 #include <time.h>
 
-#include "../s21_decimal.h"
+#include "../../s21_decimal.h"
 
 #define EPS 1e-7
 
