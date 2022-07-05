@@ -258,18 +258,31 @@ void s21_bank_rounding(s21_decimal *value, int count) {
     }
 }
 
+void ostatok(s21_decimal value1, s21_decimal value2, s21_decimal *res) {
+  s21_decimal zero = {0};
+  s21_decimal base = {0};
+  int  i = 0;
+  s21_from_int_to_decimal(10, &base);
+  while(!s21_is_equal_simple(s21_div_simple(value1, value2, NULL), zero)) {
+    s21_mul_simple(value1, base, &value1);
+    s21_div_simple(value1, value2, res);
+    i++;
+    if (i == 28)
+      break;
+  }
+}
 int main() {
     s21_decimal num = {0}, num2 = {0}, res; 
-    // num.bits[0] = 115;
-    // num.bits[1] = 0;
-    // num.bits[2] = 0;
-    // num.bits[3] = 0;
+    num.bits[0] = 3;
+    num.bits[1] = 0;
+    num.bits[2] = 0;
+    num.bits[3] = 0;
 
-    // num2.bits[0] = 15;
-    // num2.bits[1] = 0;
-    // num2.bits[2] = 0;
-    // num2.bits[3] = 0;
-    s21_from_int_to_decimal(1985485, &num);
+    num2.bits[0] = 9;
+    num2.bits[1] = 0;
+    num2.bits[2] = 0;
+    num2.bits[3] = 0;
+    // s21_from_int_to_decimal(1985485, &num);
     // set_degree(&num, 28);
     // printf("degree = %d\n", get_degree(num));
     // printf("num = %d", num.bits[3]);
@@ -279,14 +292,15 @@ int main() {
 
     // printf("\n");
     // s21_div_simple(num, num2, &res);
+    ostatok(num, num2, &res);
     // // s21_mul_simple(num, num2, &res);
     // // shift_right(&num);
  
     // printf("div\n");
-    // print_decimal_binary(res);
+    print_decimal_binary_top(res);
     // printf("fmod\n");
-    // print_decimal_binary(s21_div_simple(num, num2, &res));
-    s21_bank_rounding(&num, 4);
+    //print_decimal_binary_top(s21_div_simple(num, num2, &res));
+    // s21_bank_rounding(&num, 4);
     // printf("\n%d", get_bit(num, 33));
 
     return 0;
