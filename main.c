@@ -5,26 +5,26 @@
 
 
 int main() {
-  s21_decimal num, num2, res;
-  s21_from_int_to_decimal(5, &num);
-  s21_from_int_to_decimal(500, &num2);
-  set_degree(&num, 0);
-  set_degree(&num2, 2);
-  s21_add(num, num2, &res);
-  print_decimal_binary_top(res);
-  printf("exp = %d\n", get_degree(res));
+  s21_decimal num; //, num2, res;
+//   s21_from_int_to_decimal(5, &num);
+//   s21_from_int_to_decimal(500, &num2);
+//   set_degree(&num, 0);
+//   set_degree(&num2, 2);
+//   s21_add(num, num2, &res);
+//   print_decimal_binary_top(res);
+//   printf("exp = %d\n", get_degree(res));
 
 //   print_decimal_binary_top(num);
 //   print_decimal_binary_top(num2);
 
   //   s21_from_int_to_decimal(1, &num);
   //   s21_from_int_to_decimal(2, &num2);
-  //   float a = 5.41;
+    float a = 5.52;
   //   printf("float = %f\n", a);
 
-  //   s21_from_float_to_decimal(a, &num);
+    s21_from_float_to_decimal(a, &num);
   // ostatok(num, num2, &res);
-  // print_decimal_binary_top(res);
+  print_decimal_binary_top(num);
 
   //   num.bits[0] = 465;
   //   num.bits[1] = 0;
