@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, 'tests')
 from py_test import MyDecimal
 
 decimal = MyDecimal(input().strip('\" '))

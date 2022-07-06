@@ -38,7 +38,7 @@ void s21_sub_simple(s21_decimal value_1, s21_decimal value_2,
 }
 
 int s21_mul_simple(s21_decimal value_1, s21_decimal value_2,
-                   s21_decimal* result) {
+    s21_decimal* result) {
   s21_decimal tmp;
   initial_num(&tmp);
   // tmp.bits[3] = result->bits[3];
@@ -65,7 +65,7 @@ int s21_mul_simple(s21_decimal value_1, s21_decimal value_2,
 }
 
 s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2,
-                           s21_decimal* result) {
+    s21_decimal* result) {
   // if (value_2.bits[0] + value_2.bits[1] + value_2.bits[2])
   //     return DEV_BY_ZERO;
 

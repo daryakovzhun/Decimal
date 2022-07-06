@@ -111,4 +111,4 @@ int s21_from_decimal_to_int(s21_decimal src, int *dst) {
   return OK;
 }
 
-int s21_from_decimal_to_float(s21_decimal src, float *dst);
+// int s21_from_decimal_to_float(s21_decimal src, float *dst);
