@@ -107,8 +107,36 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
 }
 
 int s21_from_decimal_to_int(s21_decimal src, int *dst) {
-  *dst = (get_sign(src)) ? -src.bits[0] : src.bits[0];
-  return OK;
+    // printf("SRC = \n");
+    // print_decimal_binary(src);
+    // printf("EXP = %d\n", get_degree(src));
+
+    int exp = get_degree(src), sign;
+    sign = (get_sign(src)) ? -1 : 1;
+    s21_decimal ten;
+    s21_from_int_to_decimal(10, &ten);
+    while (exp > 0) {
+        // print_decimal_binary_top(src);
+        s21_div_simple(src, ten, &src);
+        exp--;
+    }
+    // printf("\nSRC = \n");
+    // print_decimal_binary(src);
+
+    // for (int i = 0; i < 31; i++) {
+    //     *dst += get_bit(src, i) * (int) pow(2, i);
+    //     printf("%lf ", pow(2, i));
+    // }
+
+    set_bit(&src, 31, 0);
+    *dst = src.bits[0];
+
+    *dst *= sign;
+
+    // *dst *= (get_sign(src)) ? -src.bits[0] : src.bits[0];
+    // printf("dst = %d\t bit[0] = %d\n", *dst, src.bits[0]);
+    // *dst *= src.bits[0];
+    return OK;
 }
 
 int s21_from_decimal_to_float(s21_decimal src, float *dst);

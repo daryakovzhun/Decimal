@@ -27,18 +27,18 @@
 #define COLOR_UNDERLINE "\033[4m"
 
 #define PYTHON "python3"
-#define TRUNCATE_PATH " py_test/print_truncate_testcase.py"
-#define ROUND_PATH " py_test/print_round_testcase.py"
-#define FLOOR_PATH " py_test/print_floor_testcase.py"
-#define NEGATE_PATH " py_test/print_negate_testcase.py"
+#define TRUNCATE_PATH " tests/py_test/print_truncate_testcase.py"
+#define ROUND_PATH " tests/py_test/print_round_testcase.py"
+#define FLOOR_PATH " tests/py_test/print_floor_testcase.py"
+#define NEGATE_PATH " tests/py_test/print_negate_testcase.py"
 
-#define DEC_TO_FLOAT_PATH " py_test/print_dec_to_float_testcase.py"
-#define DEC_TO_INT_PATH " py_test/print_dec_to_int_testcase.py"
-#define FLOAT_TO_DEC_PATH " py_test/print_float_to_dec_testcase.py"
-#define INT_TO_DEC_PATH " py_test/print_int_to_dec_testcase.py"
+#define DEC_TO_FLOAT_PATH " tests/py_test/print_dec_to_float_testcase.py"
+#define DEC_TO_INT_PATH " tests/py_test/print_dec_to_int_testcase.py"
+#define FLOAT_TO_DEC_PATH " tests/py_test/print_float_to_dec_testcase.py"
+#define INT_TO_DEC_PATH " tests/py_test/print_int_to_dec_testcase.py"
 
-#define EQ_PATH " py_test/print_eq_testcase.py"
-#define LESS_PATH " py_test/print_less_testcase.py"
+#define EQ_PATH " tests/py_test/print_eq_testcase.py"
+#define LESS_PATH " tests/py_test/print_less_testcase.py"
 
 #define REDIRECT " >> "
 #define REDIRECT_FILE "input.txt"

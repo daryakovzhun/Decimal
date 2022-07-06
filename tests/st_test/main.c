@@ -175,61 +175,64 @@ void clear_input() {
   system(command);
 }
 
-int main() {
-  clear_input();
-    // s21_decimal a = str2decimal("10000000000001100000000000000000100101011011000111001101011010110000111010000000000001101100110001000011011110000110001000010000");
-    // s21_decimal b = str2decimal("10000000000010010000000000000000010111010011001100010011000011101100011001010011110101110101111000101101111110101111010011010000");
+// int main() {
+//   clear_input();
+//     // s21_decimal a = str2decimal("10000000000100010000000000000000100001111110101011110011101001110011100010110110110110110100100111111001111001100011000000110001");
+//     // // s21_decimal b = str2decimal("10000000000010010000000000000000010111010011001100010011000011101100011001010011110101110101111000101101111110101111010011010000");
+//     // s21_decimal ten, res;
+//     // s21_from_int_to_decimal(10, &ten);
+//     // s21_div_simple(a, ten, &res);
+//     // print_decimal_binary_top(res);
+//     // printf("%d\n",s21_is_less(a, b));
 
-    // printf("%d\n",s21_is_less(a, b));
+//   for (int i = 0; i < 1000; i++) {
+//     // printf(COLOR_GREEN "TRUNCATE:\n" COLOR_END);
+//     // run_truncate_test(10);
 
-  for (int i = 0; i < 1000; i++) {
-    // printf(COLOR_GREEN "TRUNCATE:\n" COLOR_END);
-    // run_truncate_test(10);
+//     // clear_input();
+//     // printf(COLOR_GREEN "ROUND:\n" COLOR_END);
+//     // run_round_test(10);
 
-    // clear_input();
-    // printf(COLOR_GREEN "ROUND:\n" COLOR_END);
-    // run_round_test(10);
+//     // clear_input();
+//     // printf(COLOR_GREEN "FLOOR:\n" COLOR_END);
+//     // run_floor_test(10);
+//     // clear_input();
+//     // printf(COLOR_GREEN "NEGATE:\n" COLOR_END);
+//     // run_negate_test(10);
 
-    // clear_input();
-    // printf(COLOR_GREEN "FLOOR:\n" COLOR_END);
-    // run_floor_test(10);
-    // clear_input();
-    // printf(COLOR_GREEN "NEGATE:\n" COLOR_END);
-    // run_negate_test(10);
+//     // clear_input();
+//     // printf(COLOR_GREEN "DEC_TO_FLOAT:\n" COLOR_END);
+//     // run_dec_to_float_test(10);
+//     // clear_input();
 
-    // clear_input();
-    // printf(COLOR_GREEN "DEC_TO_FLOAT:\n" COLOR_END);
-    // run_dec_to_float_test(10);
-    // clear_input();
+//     clear_input();
+//     printf(COLOR_GREEN "DEC_TO_INT:\n" COLOR_END);
+//     run_dec_to_int_test(10);
+//     clear_input();
 
-    // clear_input();
-    // printf(COLOR_GREEN "DEC_TO_INT:\n" COLOR_END);
-    // run_dec_to_int_test(10);
-    // clear_input();
+//     // clear_input();
+//     // printf(COLOR_GREEN "FLOAT_TO_DEC:\n" COLOR_END);
+//     // run_float_to_dec_test(10);
+//     // clear_input();
 
-    // clear_input();
-    // printf(COLOR_GREEN "FLOAT_TO_DEC:\n" COLOR_END);
-    // run_float_to_dec_test(10);
-    // clear_input();
-
-    // clear_input();
-    // printf(COLOR_GREEN "INT_TO_DEC:\n" COLOR_END);
-    // run_int_to_dec_test(10);
-    // clear_input();
+//     // clear_input();
+//     // printf(COLOR_GREEN "INT_TO_DEC:\n" COLOR_END);
+//     // run_int_to_dec_test(10);
+//     // clear_input();
     
 
-    clear_input();
-    printf(COLOR_GREEN "EQ TEST:\n" COLOR_END);
-    run_eq_test(10);
-    clear_input();
+//     // clear_input();
+//     // printf(COLOR_GREEN "EQ TEST:\n" COLOR_END);
+//     // run_eq_test(10);
+//     // clear_input();
 
-    clear_input();
-    printf(COLOR_GREEN "LESS TEST:\n" COLOR_END);
-    run_less_test(10);
-    clear_input();
+//     // clear_input();
+//     // printf(COLOR_GREEN "LESS TEST:\n" COLOR_END);
+//     // run_less_test(10);
+//     // clear_input();
 
-    printf("\n");
-  }
+//     printf("\n");
+//   }
 
-  return 0;
-}
+//   return 0;
+// }
