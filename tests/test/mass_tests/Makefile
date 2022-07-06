@@ -1,47 +1,37 @@
-CC = gcc -g #-fsanitize=address
+CC = gcc -g -fsanitize=address
 
-SOURCES:= ../../../bbbbb
-
-OBJECTS:= $(SOURCES:.c=.o)
+OBJECTS:= ../../../*.o
 RM:= rm -rf
 
 # all: test_add test_sub test_mul test_add test_div
 PHONY: all
 
 test_int_add: $(SOURCES) $(OBJECTS) addition_test.c
-	@$(CC) $(OBJECTS) addition_test.c -o $@ -lgmp -lm
-	@rm -rf test_int_add
+	$(CC) $(OBJECTS) addition_test.c -o $@ -lgmp -lm
 
 test_int_sub: $(SOURCES) $(OBJECTS) subtraction_test.c
-	@$(CC) $(OBJECTS) subtraction_test.c -o $@ -lgmp -lm
-	@rm -rf test_int_sub
+	$(CC) $(OBJECTS) subtraction_test.c -o $@ -lgmp -lm
 
 test_int_mul: $(SOURCES) $(OBJECTS) multiplication_test.c
-	@$(CC) $(OBJECTS) multiplication_test.c -o $@ -lgmp -lm
-	@rm -rf test_int_mul
+	$(CC) $(OBJECTS) multiplication_test.c -o $@ -lgmp -lm
 
 test_int_div: $(SOURCES) $(OBJECTS) division_test.c
-	@$(CC) $(OBJECTS) division_test.c -o $@ -lgmp -lm
-	@rm -rf test_int_div
+	$(CC) $(OBJECTS) division_test.c -o $@ -lgmp -lm
 
 test_float_add: $(SOURCES) $(OBJECTS) float_addition_test.c
-	@$(CC) $(OBJECTS) float_addition_test.c -o $@ -lgmp -lm
-	@rm -rf test_float_add
+	$(CC) $(OBJECTS) float_addition_test.c -o $@ -lgmp -lm
 
 test_float_sub: $(SOURCES) $(OBJECTS) float_subtraction_test.c
-	@$(CC) $(OBJECTS) float_subtraction_test.c -o $@ -lgmp -lm
-	@rm -rf test_float_sub
+	$(CC) $(OBJECTS) float_subtraction_test.c -o $@ -lgmp -lm
 
 test_float_mul: $(SOURCES) $(OBJECTS) float_multiplication_test.c
-	@$(CC) $(OBJECTS) float_multiplication_test.c -o $@ -lgmp -lm
-	@rm -rf test_float_mul
+	$(CC) $(OBJECTS) float_multiplication_test.c -o $@ -lgmp -lm
 
 test_float_div: $(SOURCES) $(OBJECTS) float_division_test.c
-	@$(CC) $(OBJECTS) float_division_test.c -o $@ -lgmp -lm
-	@rm -rf test_float_div
+	$(CC) $(OBJECTS) float_division_test.c -o $@ -lgmp -lm
 
 %.o: %.c
-	@$(CC) -c $< -o $@ -lm
+	$(CC) -c $< -o $@ -lm
 
 clean:
 	@$(RM) ../../another/*.o \

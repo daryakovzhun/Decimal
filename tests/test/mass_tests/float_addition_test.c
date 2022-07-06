@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "../../arithmetic/decimal_arithmetic.h"
+#include "../../../s21_decimal.h"
 
 void clear_it(mpz_t num1, mpz_t num2, mpz_t num1_helper, mpz_t num2_helper);
 void generate_it(mpz_t num1_helper, mpz_t num1, mpz_t num2_helper, mpz_t num2,
@@ -18,7 +18,7 @@ void check_ret_value(int ret_value, mpf_t num1, mpf_t num2, mpf_t rop);
 void create_infinity(mpz_t infinity);
 void create_neg_infinity(mpz_t neg_infinity);
 void convert_decimal_to_mpf(int *bits, mpz_t s21_rop, mpf_t s21_final);
-void compare(mpf_t rop, mpf_t s21_rop, mpf_t num1, mpf_t num2);
+int compare(mpf_t rop, mpf_t s21_rop, mpf_t num1, mpf_t num2);
 // void print_bits(mpf_t var);
 void convert_mpz_to_decimal(mpz_t var, int *bits, int *result, int sign,
                             unsigned int floating_point);
@@ -42,7 +42,7 @@ int main() {
   mpz_init(num2);
 
   ptr = fopen("log.txt", "a");
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < 1000; i++) {
     generate_it(num1_helper, num1, num2_helper, num2, rstate);
   }
   gmp_randclear(rstate);
@@ -125,7 +125,11 @@ void check_addition(mpf_t num1, mpf_t num2, int *result1, int *result2) {
     mpf_add(rop, num1, num2);
     // gmp_printf("\nmpf res is %Ff\n", rop);
     convert_decimal_to_mpf(check_helper.bits, s21_rop, s21_final);
-    compare(rop, s21_final, num1, num2);
+    if (compare(rop, s21_final, num1, num2)) {
+      d_print_decimal(a);
+      d_print_decimal(b);
+      d_print_decimal(check_helper);
+    }
   }
   mpf_clear(rop);
   mpz_clear(s21_rop);
@@ -254,13 +258,14 @@ void convert_decimal_to_mpf(int *bits, mpz_t s21_rop, mpf_t s21_final) {
   mpz_clear(divide_by_10);
 }
 
-void compare(mpf_t rop, mpf_t s21_rop, mpf_t num1, mpf_t num2) {
+int compare(mpf_t rop, mpf_t s21_rop, mpf_t num1, mpf_t num2) {
   mpf_t diff, condition;
   mpf_init(diff);
   mpf_init(condition);
   mpf_sub(diff, rop, s21_rop);
   // gmp_printf("diff is %Ff\n", diff);
   mpf_abs(diff, diff);
+  int status = 0;
   if (mpf_cmp_ui(diff, 2) < 0) {
     success_count++;
     // printf("\033[32mSUCCESS\033[0m\n");
@@ -269,12 +274,15 @@ void compare(mpf_t rop, mpf_t s21_rop, mpf_t num1, mpf_t num2) {
     fail_count++;
     gmp_fprintf(ptr, "num1 is %Ff\n", num1);
     gmp_fprintf(ptr, "num2 is %Ff\n\n", num2);
+    status = 1;
     gmp_fprintf(ptr, "mpz res is %Ff\n", rop);
     gmp_fprintf(ptr, "s21 res is %Ff\n", s21_rop);
     fprintf(ptr, "FAIL\n\n\n");
   }
   mpf_clear(diff);
   mpf_clear(condition);
+  return status;
+
 }
 
 // void print_bits(mpf_t var) {

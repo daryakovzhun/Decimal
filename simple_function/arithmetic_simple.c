@@ -1,6 +1,6 @@
 #include "../s21_decimal.h"
 
-void s21_add_simple(s21_decimal value_1, s21_decimal value_2,
+int s21_add_simple(s21_decimal value_1, s21_decimal value_2,
                     s21_decimal* result) {
   initial_num(result);
   int rank = 0;
@@ -12,6 +12,8 @@ void s21_add_simple(s21_decimal value_1, s21_decimal value_2,
 
     rank = (bit_val1 && bit_val2) || (bit_val1 && rank) || (bit_val2 && rank);
   }
+
+  return rank;
 }
 
 void s21_sub_simple(s21_decimal value_1, s21_decimal value_2,
@@ -37,29 +39,29 @@ void s21_sub_simple(s21_decimal value_1, s21_decimal value_2,
   }
 }
 
-int s21_mul_simple(s21_decimal value_1, s21_decimal value_2,
-                   s21_decimal* result) {
-  s21_decimal tmp;
-  initial_num(&tmp);
-  // tmp.bits[3] = result->bits[3];
-  int is_owerfull = 0;
-  for (int i = 0; i < 96; i++) {
-    if (get_bit(value_2, i) == 1) {
-      s21_decimal temp = value_1;
-      int k = 0;
-      while (k < i) {
-        if (shift_left(&temp)) {
-          i = 96;
-          is_owerfull = 1;
-          break;
+int s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal* result) {
+    s21_decimal tmp;
+    initial_num(&tmp);
+    // tmp.bits[3] = result->bits[3];
+    int is_owerfull = 0;
+    for (int i = 0; i < 96 && !is_owerfull; i++) {
+        if (get_bit(value_2, i) == 1) {
+            s21_decimal temp = value_1;
+            int k = 0;
+            while (k < i) {
+                if (shift_left(&temp)) {
+                    is_owerfull = 1;
+                    break;
+                }
+                k++;
+            }
+            if (is_owerfull || (is_owerfull = s21_add_simple(temp, tmp, &tmp))) {
+                break;
+            }
         }
-        k++;
-      }
-      s21_add_simple(temp, tmp, &tmp);
     }
-  }
 
-  if (!is_owerfull) *result = tmp;
+    if (!is_owerfull) *result = tmp;
 
   return is_owerfull;
 }

@@ -1,6 +1,8 @@
 #include "s21_decimal.h"
 
 void s21_bank_rounding(s21_decimal *value, int count) {
+  int system_bit = value->bits[3];
+  int exp = get_degree(*value) - count;
   while (count > 0) {
     s21_decimal base = {0}, one = {0}, two = {0}, two_res = {0};
     s21_from_int_to_decimal(10, &base);
@@ -17,4 +19,6 @@ void s21_bank_rounding(s21_decimal *value, int count) {
     // print_decimal_binary_top(*value);
     count--;
   }
+  value->bits[3] = system_bit;
+  set_degree(value, exp);
 }

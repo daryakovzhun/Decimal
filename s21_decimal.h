@@ -56,7 +56,7 @@ void set_bit(s21_decimal* number, int bit, int sign);
 int shift_left(s21_decimal* number);
 int shift_right(s21_decimal* number);
 void initial_num(s21_decimal* number);
-void s21_add_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+int s21_add_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 void s21_sub_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int s21_mul_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 s21_decimal s21_div_simple(s21_decimal value_1, s21_decimal value_2, s21_decimal* result);
