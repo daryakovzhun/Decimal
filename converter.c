@@ -105,6 +105,13 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
 
   return 0;
 }
+// int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+//     int is_overfull = OK;
+//     set_sign(&value_2, !get_sign(value_2));
+//     is_overfull = s21_add(value_1, value_2, result);
+
+//     return is_overfull;
+// }
 
 int s21_from_decimal_to_int(s21_decimal src, int *dst) {
     // printf("SRC = \n");
@@ -139,4 +146,32 @@ int s21_from_decimal_to_int(s21_decimal src, int *dst) {
     return OK;
 }
 
-// int s21_from_decimal_to_float(s21_decimal src, float *dst);
+int s21_from_decimal_to_float(s21_decimal src, float *dst) {
+    double a = 0;
+    s21_decimal whole = {0};
+    s21_decimal res = {0};
+    s21_truncate(src, &res);
+    int sign = 0;
+    for(int i = 0; i < 95; i++) {
+        sign = get_bit(res, i);
+        a += sign * pow(2, i);
+    }
+    s21_decimal float_part = {0};
+    s21_sub(src, res, &float_part);
+    long double f_part = 0;
+    int count = 0;
+    for(int i = 0; i < 95; i++) {
+        sign = get_bit(float_part, i);
+        count++;
+        f_part += sign * pow(2, i);
+    }
+    int degree = (int)(ceil(log10(f_part)));
+    printf("main_part = %lf\n", a);
+    double dst1 = f_part/ pow(10, degree) + a;
+    *dst = (float) dst1;
+    printf("lalala = %lf\n", dst1);
+    printf("res_float = %f\n", *dst);
+    float asdasd = 340216.561045;
+    printf("A ETO CHTO %f\n", asdasd);
+    // printf("finish = %lf\n", dst1 + a);
+}
