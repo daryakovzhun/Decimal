@@ -13,7 +13,6 @@ enum enum_error {
     NUMBER_INF = 1,
     TRUE = 1,
     ERROR_CONVERT = 1,
-
     NUMBER_MIN_INF = 2,
     DEV_BY_ZERO = 3
 };

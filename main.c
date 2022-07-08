@@ -19,8 +19,8 @@ int main() {
 
   //   s21_from_int_to_decimal(1, &num);
   //   s21_from_int_to_decimal(2, &num2);
-    float a = 5.52;
-  //   printf("float = %f\n", a);
+    float a = 56123865.18756;
+    printf("float = %f\n", a);
 
     s21_from_float_to_decimal(a, &num);
   // ostatok(num, num2, &res);

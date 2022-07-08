@@ -16,10 +16,10 @@ void balance(s21_decimal* value_1, s21_decimal* value_2) {
 
     while (min_deg != max_deg) {
         if (!s21_mul_simple(*min_val, ten, min_val)) {
-        min_deg++;
-        set_degree(min_val, min_deg);
+            min_deg++;
+            set_degree(min_val, min_deg);
         } else {
-        s21_bank_rounding(max_val, max_deg - min_deg);
+            s21_bank_rounding(max_val, max_deg - min_deg);
         break;
         }
     }
@@ -38,7 +38,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal* result) {
     int sign_1 = get_sign(value_1);
     int sign_2 = get_sign(value_2);
 
-    if (!(sign_1 ^ sign_2)) {                                   // value_1 > 0 && value_2 > 0 || value_1 < 0 && value_2 < 0
+    if (!(sign_1 ^ sign_2)) {
             is_overfull = s21_add_simple(value_1, value_2, result);
             set_sign(result, sign_1);
     } else if (!sign_1 && sign_2) {                             // value_1 > 0 && value_2 < 0
@@ -49,7 +49,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal* result) {
             s21_sub_simple(value_1, value_2, result);           // value_1 > value_2
             set_sign(result, 0);
         }
-    } else {  // value_1 < 0 && value_2 > 0
+    } else {                                                    // value_1 < 0 && value_2 > 0
         if (s21_is_less_or_equal_simple(value_2, value_1)) {
             s21_sub_simple(value_1, value_2, result);  // value_2 <= value_1
             set_sign(result, 1);
