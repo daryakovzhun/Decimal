@@ -28,11 +28,11 @@ int s21_floor(s21_decimal value, s21_decimal *result) {
     s21_from_int_to_decimal(1, &one);
     int sign = get_sign(value);
     s21_truncate(value, result);
-    if (sign == 1 && !s21_is_equal_simple(value, *result)) {
+    if (sign == 1 && !s21_is_equal(value, *result)) {
         s21_add_simple(*result, one, result);
     }
     set_sign(result, sign);
-    return OK;   //  исправить return
+    return OK;
 }
 
 int s21_round(s21_decimal value, s21_decimal *result) {
@@ -50,7 +50,7 @@ int s21_round(s21_decimal value, s21_decimal *result) {
         degree--;
     }
     mul = s21_div_simple(value, base, &value);
-    if (mul.bits[0] >= 5 && !s21_is_equal_simple(copy, *result)) {
+    if (mul.bits[0] >= 5 && !s21_is_equal(copy, *result)) {
         s21_add_simple(*result, one, result);
     }
     set_sign(result, sign);
@@ -63,7 +63,6 @@ int s21_truncate(s21_decimal value, s21_decimal *result) {
     s21_decimal base = {0};
     *result = value;
     s21_from_int_to_decimal(10, &base);
-
     while (degree != 0) {
         s21_div_simple(*result, base, result);
         degree--;
@@ -73,7 +72,7 @@ int s21_truncate(s21_decimal value, s21_decimal *result) {
 }
 
 int s21_negate(s21_decimal value, s21_decimal *result) {
-    int sign = get_sign(value);
-    set_sign(result, !sign);
+    *result = value;
+    set_sign(result, !get_sign(value));
     return OK;
 }
