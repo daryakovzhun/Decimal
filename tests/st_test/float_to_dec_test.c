@@ -23,7 +23,7 @@ void run_float_to_dec_test(int count) {
 
     s21_from_decimal_to_float(s21_res, &s21_res_f);
 
-    if (num != s21_res_f) {
+    if (fabs(num - s21_res_f) > 10e-6) {
       printf("%s%s%s\n", COLOR_RED, "ERROR", COLOR_END);
       printf("%s%s%s\n%d\n", COLOR_RED, "RETURN ERROR: ", COLOR_END, ret_error);
 

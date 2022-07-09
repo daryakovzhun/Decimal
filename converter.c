@@ -56,8 +56,7 @@ int count_str_float(float src, char* str_src) {
 
 int s21_from_float_to_decimal(float src, s21_decimal *dst) {
     char str_src[100];
-    int count_str = count_str_float(src, str_src);
-
+    int count_str = count_str_float(src, str_src), is_overfull = 0;
     initial_num(dst);
 
     s21_decimal ten;
@@ -67,12 +66,15 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
         if (str_src[i] != '.' && str_src[i] != '-') {
             s21_decimal add;
             s21_from_int_to_decimal(str_src[i] - '0', &add);
-
             s21_add_simple(*dst, add, dst);
-            s21_mul_simple(*dst, ten, dst);
+            is_overfull = s21_mul_simple(*dst, ten, dst);
         }
     }
-    s21_div_simple(*dst, ten, dst);
+
+    if (!is_overfull) {
+        s21_div_simple(*dst, ten, dst);
+    }
+
     set_sign(dst, src < 0);
     set_degree(dst, count_str);
 
@@ -105,4 +107,29 @@ int s21_from_decimal_to_int(s21_decimal src, int *dst) {
     return OK;
 }
 
-int s21_from_decimal_to_float(s21_decimal src, float *dst);
+int s21_from_decimal_to_float(s21_decimal src, float *dst) {
+    int minus = get_sign(src);
+    long double a = 0;
+    s21_decimal zero = {0}, res = {0}, ten = {0};
+    s21_from_int_to_decimal(10, &ten);
+    s21_truncate(src, &res);
+    int sign = 0;
+    for(int i = 0; i < 96; i++) {
+        sign = get_bit(res, i);
+        a += sign * pow(2, i);
+    }
+    s21_decimal float_part = {0};
+    s21_sub(src, res, &float_part);
+    int degree = get_degree(src);
+    long double f_part = 0;
+    int count = 0;
+    for(int i = 0; i < 96; i++) {
+        sign = get_bit(float_part, i);
+        count++;
+        f_part += sign * pow(2, i);
+    }
+    *dst = f_part / pow(10, degree) + a;
+    if (minus == 1) {
+        *dst = -(*dst);
+    }
+}
