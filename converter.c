@@ -132,4 +132,5 @@ int s21_from_decimal_to_float(s21_decimal src, float *dst) {
     if (minus == 1) {
         *dst = -(*dst);
     }
+    return OK;
 }
