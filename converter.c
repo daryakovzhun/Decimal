@@ -110,7 +110,7 @@ int s21_from_decimal_to_int(s21_decimal src, int *dst) {
 int s21_from_decimal_to_float(s21_decimal src, float *dst) {
     int minus = get_sign(src);
     long double a = 0;
-    s21_decimal zero = {0}, res = {0}, ten = {0};
+    s21_decimal res = {0}, ten = {0};
     s21_from_int_to_decimal(10, &ten);
     s21_truncate(src, &res);
     int sign = 0;
