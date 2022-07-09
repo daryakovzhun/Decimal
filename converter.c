@@ -48,23 +48,8 @@ int count_str_float(float src, char* str_src) {
         }
         count_str++;
     }
-    // printf("str = %s\n", str);
-
-    // for (size_t i = 0; i < strlen(str); i++) {
-    //     if (str[i] == '.') {
-    //         k = 0;
-    //         continue;
-    //     }
-    //     if (k >= 0) {
-    //         str_src[k] = str[i];
-    //         k++;
-    //     }
-    // }
-    // str_src[k] = '\0';
 
     strcpy(str_src, str);
-
-    // printf("str = %s\n", str_src);
 
     return count_str;
 }
@@ -72,17 +57,14 @@ int count_str_float(float src, char* str_src) {
 int s21_from_float_to_decimal(float src, s21_decimal *dst) {
     char str_src[100];
     int count_str = count_str_float(src, str_src);
-    // printf("str_src = %s\n", str_src);
 
     initial_num(dst);
-    // s21_from_int_to_decimal(1, dst);
-    set_sign(dst, src < 0);
 
-    s21_decimal ten; // exp_d = *dst, ten; // float_dst = {0}, ten;
+    s21_decimal ten;
     s21_from_int_to_decimal(10, &ten);
 
     for (size_t i = 0; i < strlen(str_src); i++) {
-        if (str_src[i] != '.') {
+        if (str_src[i] != '.' && str_src[i] != '-') {
             s21_decimal add;
             s21_from_int_to_decimal(str_src[i] - '0', &add);
 
@@ -90,53 +72,8 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
             s21_mul_simple(*dst, ten, dst);
         }
     }
-
     s21_div_simple(*dst, ten, dst);
-
-    // int *src_int = (int *)&src;
-
-    // int exp = get_exp(*src_int) - 127, temp_exp = exp;
-
-    // while (temp_exp > 0) {
-    //     shift_left(dst);
-    //     temp_exp--;
-    // }
-
-    // s21_decimal exp_d = *dst, float_dst = {0}, ten;
-    // s21_from_int_to_decimal(10, &ten);
-
-    // int mantisa = 0;
-    // for (int i = 22; i >= 0; i--) {
-    //     int bit_mantisa = get_bit_int(*src_int, i);
-    //     if (bit_mantisa && exp > 0) {
-    //         s21_decimal temp = exp_d;
-    //         for (int j = 0; j <= mantisa; j++) {
-    //           shift_right(&temp);
-    //         }
-    //         s21_add_simple(*dst, temp, dst);
-    //     }
-    //     mantisa++;
-    //     exp--;
-    // }
-
-    // for (size_t i = 0; i < strlen(str_src); i++) {
-    //     s21_decimal add;
-    //     s21_from_int_to_decimal(str_src[i] - '0', &add);
-
-    //     s21_add_simple(float_dst, add, &float_dst);
-    //     s21_mul_simple(float_dst, ten, &float_dst);
-    // }
-    // s21_div_simple(float_dst, ten, &float_dst);
-
-    // int temp = count_str;
-    // while (temp > 0) {
-    //     s21_mul_simple(*dst, ten, dst);
-    //     temp--;
-    // }
-
-
-    // s21_add_simple(*dst, float_dst, dst);
-
+    set_sign(dst, src < 0);
     set_degree(dst, count_str);
 
     return 0;
