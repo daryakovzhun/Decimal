@@ -1,0 +1,22 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/rosanabr/Desktop/dec_2/src'
+gcc -Wall -Werror -Wextra   -c -o arithmetic.o arithmetic.c
+gcc -Wall -Werror -Wextra   -c -o condition.o condition.c
+gcc -Wall -Werror -Wextra   -c -o converter.o converter.c
+gcc -Wall -Werror -Wextra   -c -o other_function.o other_function.c
+gcc -Wall -Werror -Wextra   -c -o simple_function/arithmetic_simple.o simple_function/arithmetic_simple.c
+gcc -Wall -Werror -Wextra   -c -o simple_function/bank_rounding.o simple_function/bank_rounding.c
+gcc -Wall -Werror -Wextra   -c -o simple_function/condition_simple.o simple_function/condition_simple.c
+gcc -Wall -Werror -Wextra   -c -o simple_function/get_or_set.o simple_function/get_or_set.c
+gcc -Wall -Werror -Wextra   -c -o simple_function/initialization.o simple_function/initialization.c
+gcc -Wall -Werror -Wextra   -c -o simple_function/print.o simple_function/print.c
+gcc -Wall -Werror -Wextra   -c -o simple_function/shift.o simple_function/shift.c
+ar rc s21_decimal.a arithmetic.o condition.o converter.o other_function.o ./simple_function/arithmetic_simple.o ./simple_function/bank_rounding.o ./simple_function/condition_simple.o ./simple_function/get_or_set.o ./simple_function/initialization.o ./simple_function/print.o ./simple_function/shift.o 
+ranlib s21_decimal.a
+gcc -o test arithmetic.c condition.c converter.c other_function.c ./simple_function/arithmetic_simple.c ./simple_function/bank_rounding.c ./simple_function/condition_simple.c ./simple_function/get_or_set.c ./simple_function/initialization.c ./simple_function/print.c ./simple_function/shift.c ./tests/*.c  -Wall -Werror -Wextra -fprofile-arcs -ftest-coverage -lgcov -lcheck -lm -lpthread 
+./test
+geninfo *.gcda *.gcno -b . -o check_res 
+genhtml check_res -o finish
+gcc -Wall -Werror -Wextra -lcheck -lm -lpthread ./tests/*.c  arithmetic.o condition.o converter.o other_function.o ./simple_function/arithmetic_simple.o ./simple_function/bank_rounding.o ./simple_function/condition_simple.o ./simple_function/get_or_set.o ./simple_function/initialization.o ./simple_function/print.o ./simple_function/shift.o -o test
+make: Leaving directory `/Users/rosanabr/Desktop/dec_2/src'
+ 
